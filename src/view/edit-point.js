@@ -53,7 +53,7 @@ function createImagesTemplate(images) {
   return images.length
     ? `<div class="event__photos-container">
         <div class="event__photos-tape">
-        ${images.map((image) => `<img class="event__photo" src="${image}" alt="Event photo">`)}
+        ${images.map(([image, description]) => `<img class="event__photo" src="${image}" alt="${description}">`).join(``)}
         </div>
       </div>`
     : ``;
