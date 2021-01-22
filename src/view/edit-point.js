@@ -23,7 +23,7 @@ function getOfferFromId(id) {
 }
 
 function createOffersTemplate(offers, type) {
-  const availableOffers = OFFERS[type];
+  const availableOffers = [];//OFFERS[type];
   if (availableOffers.length === 0) {
     return ``;
   }

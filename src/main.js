@@ -6,15 +6,14 @@ import PointsModel from './model/points';
 import FilterModel from './model/filter';
 import {generateTripPoint} from './mock/point';
 import {render, RenderPosition} from './utils/render';
+import Api from './api';
+import { UpdateType } from './const';
 
-const TRIP_POINTS = 20;
-const tripPoints = new Array(TRIP_POINTS).fill().map(generateTripPoint);
-tripPoints.sort((a, b) => {
-  return a.dates[0] - b.dates[0];
-});
+const AUTHORIZATION = `Basic aasdflkja9087qweij`;
+const END_POINT = `https://13.ecmascript.pages.academy/big-trip/`;
+const api = new Api(END_POINT, AUTHORIZATION);
 
 const pointsModel = new PointsModel();
-pointsModel.setPoints(tripPoints);
 
 const tripMainHandler = document.querySelector(`.trip-main`);
 const tripControlsHandler = tripMainHandler.querySelector(`.trip-controls`);
@@ -37,4 +36,8 @@ tripPresenter.init();
 document.querySelector(`.trip-main__event-add-btn`).addEventListener(`click`, (evt) => {
   evt.preventDefault();
   tripPresenter.createPoint();
+});
+
+api.getPoints().then((points) => {
+  pointsModel.setPoints(UpdateType.INIT, points);
 });
