@@ -9,10 +9,11 @@ import {UserAction, UpdateType, FilterType, SortType} from '../const';
 import {sortPointDefault, sortPointTime, sortPointPriceDown} from '../utils/point';
 
 export default class Trip {
-  constructor(tripContainer, pointsModel, filterModel) {
+  constructor(tripContainer, pointsModel, filterModel, offersModel) {
     this._tripContainer = tripContainer;
     this._pointsModel = pointsModel;
     this._filterModel = filterModel;
+    this._offersModel = offersModel;
     this._pointsPresenters = {};
     this._currentSortType = SortType.DEFAULT;
 
@@ -146,7 +147,7 @@ export default class Trip {
   }
 
   _renderPoint(point) {
-    const pointPresenter = new PointPresenter(this._pointListComponent, this._handleModeChange, this._handleViewAction);
+    const pointPresenter = new PointPresenter(this._pointListComponent, this._handleModeChange, this._handleViewAction, this._offersModel);
     pointPresenter.init(point);
     this._pointsPresenters[point.id] = pointPresenter;
   }

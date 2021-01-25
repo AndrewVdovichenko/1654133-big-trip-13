@@ -4,16 +4,17 @@ import FilterPresenter from './presenter/filter';
 import SummaryPresenter from './presenter/summary';
 import PointsModel from './model/points';
 import FilterModel from './model/filter';
-import {generateTripPoint} from './mock/point';
 import {render, RenderPosition} from './utils/render';
 import Api from './api';
-import { UpdateType } from './const';
+import {UpdateType} from './const';
+import Offers from './utils/offers';
 
 const AUTHORIZATION = `Basic aasdflkja9087qweij`;
 const END_POINT = `https://13.ecmascript.pages.academy/big-trip/`;
 const api = new Api(END_POINT, AUTHORIZATION);
 
 const pointsModel = new PointsModel();
+const offersModel = new Offers();
 
 const tripMainHandler = document.querySelector(`.trip-main`);
 const tripControlsHandler = tripMainHandler.querySelector(`.trip-controls`);
@@ -30,9 +31,6 @@ filterPresenter.init();
 
 const tripEventsElement = document.querySelector(`.trip-events`);
 
-const tripPresenter = new TripPresenter(tripEventsElement, pointsModel, filterModel);
-tripPresenter.init();
-
 document.querySelector(`.trip-main__event-add-btn`).addEventListener(`click`, (evt) => {
   evt.preventDefault();
   tripPresenter.createPoint();
@@ -41,3 +39,11 @@ document.querySelector(`.trip-main__event-add-btn`).addEventListener(`click`, (e
 api.getPoints().then((points) => {
   pointsModel.setPoints(UpdateType.INIT, points);
 });
+
+api.getOffers()
+  .then((offers) => {
+    offersModel.setOffers(offers)
+});
+
+const tripPresenter = new TripPresenter(tripEventsElement, pointsModel, filterModel, offersModel);
+tripPresenter.init();

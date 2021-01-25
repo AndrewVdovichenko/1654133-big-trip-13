@@ -6,7 +6,7 @@ import {TRIP_POINT_TYPES, UserAction, UpdateType} from '../const';
 import {nanoid} from 'nanoid';
 
 const BLANK_POINT = {
-  type: TRIP_POINT_TYPES[0],
+  type: ``,//TRIP_POINT_TYPES[0],
   city: ``,
   description: ``,
   offers: getRandomOffers(TRIP_POINT_TYPES[0]),

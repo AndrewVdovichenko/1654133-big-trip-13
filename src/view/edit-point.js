@@ -25,15 +25,15 @@ function getOfferFromId(id) {
   return [title, price];
 }
 
-function createOffersTemplate(offers, type) {
-  const availableOffers = [];//OFFERS[type];
-  if (availableOffers.length === 0) {
+function createOffersTemplate(offers, type, availableOffers) {
+  //const availableOffers = [];//OFFERS[type];
+  if (Object.keys(availableOffers).length === 0) {
     return ``;
   }
 
   let template = ``;
 
-  for (const offer of availableOffers) {
+  for (const offer of availableOffers[type]) {
     const price = offers[offer] || getRandomInteger(10, 100);
     const offerId = getIdFromOffer([offer, price]);
     template += `<div class="event__offer-selector">
@@ -72,7 +72,7 @@ function createDescriptionTemplate(description, images) {
     : ``;
 }
 
-function createEditPoint(data, isNewPoint) {
+function createEditPoint(data, isNewPoint, availableOffers) {
   const {type, city, description, price, dates, offers, images} = data;
   const startDate = dayjs(dates[0]).format(`DD/MM/YY HH:mm`);
   const endDate = dayjs(dates[1]).format(`DD/MM/YY HH:mm`);
@@ -122,7 +122,7 @@ function createEditPoint(data, isNewPoint) {
           </button>
         </header>
         <section class="event__details">
-  ${createOffersTemplate(offers, type)}
+  ${createOffersTemplate(offers, type, availableOffers)}
 
   ${createDescriptionTemplate(description, images)}
         </section>
@@ -131,11 +131,12 @@ function createEditPoint(data, isNewPoint) {
 }
 
 export default class EditPoint extends SmartView {
-  constructor(point, isNewPoint = false) {
+  constructor(point, isNewPoint = false, availableOffers) {
     super();
 
     this._data = point;
     this._isNewPoint = isNewPoint;
+    this._availableOffers = availableOffers;
 
     this._startDatepicker = null;
     this._endDatepicker = null;
@@ -155,7 +156,7 @@ export default class EditPoint extends SmartView {
   }
 
   getTemplate() {
-    return createEditPoint(this._data, this._isNewPoint);
+    return createEditPoint(this._data, this._isNewPoint, this._availableOffers);
   }
 
   restoreHandlers() {
