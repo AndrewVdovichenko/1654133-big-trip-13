@@ -9,7 +9,9 @@ export const isPointInFuture = (startDate) => {
 };
 
 export const sortPointDefault = (pointA, pointB) => {
-  return pointA.dates[0] - pointB.dates[0];
+  const startDateA = dayjs(pointA.dates[0]);
+  const startDateB = dayjs(pointB.dates[0]);
+  return startDateA - startDateB;
 };
 
 export const sortPointTime = (pointA, pointB) => {
