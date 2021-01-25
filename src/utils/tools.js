@@ -37,7 +37,7 @@ export function getRandomImages() {
   const imagesNumber = getRandomInteger(1, 5);
   const images = [];
   for (let i = 0; i < imagesNumber; i++) {
-    images.push(`http://picsum.photos/248/152?r=${Math.random()}`);
+    images.push([`http://picsum.photos/248/152?r=${Math.random()}`, `Event photo`]);
   }
   return images;
 }
