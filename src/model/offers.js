@@ -13,12 +13,16 @@ export default class Offers {
 
   _adaptToClient(offers) {
     const result = {};
-
     for (const offer of offers) {
-      result[offer.type] = [];
-      for (const item of offer.offers) {
-        
+      const availableOffers = [];
+      for (const option of offer.offers) {
+        const title = option.title;
+        const price = parseInt(option.price);
+        availableOffers.push({
+          [title]: price,
+        });
       }
+      result[offer.type] = availableOffers;
     }
 
     return result;

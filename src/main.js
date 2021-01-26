@@ -7,7 +7,7 @@ import FilterModel from './model/filter';
 import {render, RenderPosition} from './utils/render';
 import Api from './api';
 import {UpdateType} from './const';
-import Offers from './utils/offers';
+import Offers from './model/offers';
 
 const AUTHORIZATION = `Basic aasdflkja9087qweij`;
 const END_POINT = `https://13.ecmascript.pages.academy/big-trip/`;
@@ -36,13 +36,12 @@ document.querySelector(`.trip-main__event-add-btn`).addEventListener(`click`, (e
   tripPresenter.createPoint();
 });
 
-api.getPoints().then((points) => {
-  pointsModel.setPoints(UpdateType.INIT, points);
+api.getOffers().then((offers) => {
+  offersModel.setOffers(offers);
 });
 
-api.getOffers()
-  .then((offers) => {
-    offersModel.setOffers(offers)
+api.getPoints().then((points) => {
+  pointsModel.setPoints(UpdateType.INIT, points);
 });
 
 const tripPresenter = new TripPresenter(tripEventsElement, pointsModel, filterModel, offersModel);

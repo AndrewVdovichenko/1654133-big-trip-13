@@ -25,15 +25,15 @@ function getOfferFromId(id) {
   return [title, price];
 }
 
-function createOffersTemplate(offers, type, availableOffers) {
-  //const availableOffers = [];//OFFERS[type];
-  if (Object.keys(availableOffers).length === 0) {
+function createOffersTemplate(offers, type, aOffers) {
+  const availableOffers = aOffers.getOffers()[type];
+  if (availableOffers.length === 0) {
     return ``;
   }
 
   let template = ``;
 
-  for (const offer of availableOffers[type]) {
+  for (const offer of availableOffers) {
     const price = offers[offer] || getRandomInteger(10, 100);
     const offerId = getIdFromOffer([offer, price]);
     template += `<div class="event__offer-selector">
@@ -202,7 +202,7 @@ export default class EditPoint extends SmartView {
         Object.assign(
             {
               enableTime: true,
-              time_24hr: true,
+              'time_24hr': true,
               dateFormat: `d/m/Y H:i`,
             },
             flatpickrSettings)
